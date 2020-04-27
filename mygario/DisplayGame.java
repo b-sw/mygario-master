@@ -5,7 +5,7 @@ import java.awt.Dimension;
 //import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-//import java.awt.Point;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -30,6 +30,10 @@ public class DisplayGame extends JPanel implements ActionListener {
     public String[] args;
     public Menu menu;
 
+    private Player mainPlayer;
+    private Point centreCamera;
+
+
     public static enum STATE{
         MENU,
         GAME,
@@ -41,15 +45,23 @@ public class DisplayGame extends JPanel implements ActionListener {
 
     public DisplayGame() {
         
-        menu = new Menu( this );
+        Timer timer = new Timer( 30, this );
 
+        menu = new Menu( this );
+        addMouseListener( menu );
         setFocusable( true );
         requestFocusInWindow();
+
+        mainPlayer = new Player();
+
+
         
         Dimension newSize = new Dimension( OUTER_AREA_WIDTH, OUTER_AREA_HEIGHT );
         outerArea = new Rectangle( 0, 0, OUTER_AREA_WIDTH, OUTER_AREA_HEIGHT );
 
         setPreferredSize( newSize );
+        
+        timer.start();
 
     }
 
@@ -71,9 +83,32 @@ public class DisplayGame extends JPanel implements ActionListener {
             menu.render( g2 );
 
         }
+        else if( STATE.GAME == state ){
+
+            mainPlayer.drawPlayer( g2 );
+            
+            centreCamera = new Point( (int)( mainPlayer.getX() ), (int)( mainPlayer.getY() ) );
+            menu.setPoint( centreCamera );
+
+            g2.draw( outerArea );
+            g2.dispose(); // clean resources
+
+        }
 
     }
 
-    public void actionPerformed( ActionEvent e ){ /* abstract method stub */ } 
+    public void actionPerformed( ActionEvent e ){ 
+
+        if( STATE.GAME == state ){
+
+            repaint();
+
+        }
+
+    } 
+
+    public Player getMainPlayer()               { return this.mainPlayer; }
+
+    public void setMainPlayer( Player player )  { this.mainPlayer = player; }
 
 }
