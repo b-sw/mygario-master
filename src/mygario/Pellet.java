@@ -1,4 +1,4 @@
-//package mygario;
+package mygario;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,7 +13,7 @@ public class Pellet {
     private Ellipse2D.Double pellets[];
     private Color pelletColors[];
 
-    Pellet( int number ){
+    Pellet( final int number ){
 
         pellets = new Ellipse2D.Double[number];
         pelletColors = new Color[number];
@@ -31,7 +31,7 @@ public class Pellet {
 
     private void initPelletColors(){
 
-        Random r = new Random();
+        final Random r = new Random();
 
         for( int i = 0; i < pelletColors.length; ++i ){ 
             
@@ -43,7 +43,7 @@ public class Pellet {
 
     private void initPellets(){
 
-        Random r = new Random();
+        final Random r = new Random();
 
         for (int i = 0; i < pellets.length; ++i ){
 
@@ -53,7 +53,7 @@ public class Pellet {
 
     }
 
-    public void drawPellets( Graphics2D g ){
+    public void drawPellets( final Graphics2D g ){
 
         for( int i = 0; i < pellets.length; ++i ){
 
@@ -70,10 +70,10 @@ public class Pellet {
 
     public Ellipse2D.Double[] getPellets()              { return this.pellets; }
 
-    public void setPellets( Ellipse2D.Double[] pellets ){ this.pellets = pellets; }
+    public void setPellets( final Ellipse2D.Double[] pellets ){ this.pellets = pellets; }
 
     public Color[] getPelletColors()                    { return this.pelletColors; }
 
-    public void setPelletColors( Color[] pelletColors ) { this.pelletColors = pelletColors; }
+    public void setPelletColors( final Color[] pelletColors ) { this.pelletColors = pelletColors; }
 
 }

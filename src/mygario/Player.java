@@ -1,4 +1,4 @@
-//package mygario;
+package mygario;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
@@ -51,6 +51,7 @@ public class Player {
         velocity += DELTA_VELOCITY;
 
     }
+
     public double   getX()                          { return this.player.x; }
     public void     setX( double x )                { this.player.x = x; };
     public double   getY()                          { return this.player.y; }
@@ -61,5 +62,10 @@ public class Player {
 
     public double getVelocity()                     { return this.velocity; }
     public void setVelocity( double velocity )      { this.velocity = velocity; }
+
+    public double getRadius()                       { return this.player.width / 2; }
+
+    public double getMidX()                         { return this.player.x + this.player.width / 2; }
+    public double getMidY()                         { return this.player.y + this.player.height / 2 ; }
 
 }

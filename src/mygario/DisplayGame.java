@@ -1,4 +1,4 @@
-//package mygario;
+package mygario;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,8 +37,10 @@ public class DisplayGame extends JPanel implements ActionListener {
     public Menu menu;
 
     private Player mainPlayer;
-    private Point centreCamera;
+    private Player botPlayer;
     private long time;
+
+    private Point mainPlayerPosition;
     
     private Pellet pellets;
 
@@ -55,8 +57,10 @@ public class DisplayGame extends JPanel implements ActionListener {
         
         Timer timer = new Timer( TIMER_SPEED_MS, this );
 
-        menu = new Menu(this);
-        mainPlayer = new Player();
+        menu        = new Menu(this);
+        mainPlayer  = new Player();
+        botPlayer   = new Player();
+
         time = System.nanoTime();
 
         pellets = new Pellet( NUM_OF_PELLETS );
@@ -66,6 +70,7 @@ public class DisplayGame extends JPanel implements ActionListener {
         requestFocusInWindow();
         
         Dimension newSize = new Dimension( OUTER_AREA_WIDTH, OUTER_AREA_HEIGHT );
+
         outerArea = new Rectangle( 0, 0, OUTER_AREA_WIDTH, OUTER_AREA_HEIGHT );
 
         setPreferredSize( newSize );
@@ -74,18 +79,12 @@ public class DisplayGame extends JPanel implements ActionListener {
 
     }
 
-    public void setViewPort( JViewport vPort ){
-
-        this.vPort = vPort;
-
-    }
-
     public void paintComponent( Graphics g ){
 
         super.paintComponent( g );
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-        setBackground( Color.WHITE );
+        setBackground( Color.LIGHT_GRAY );
         
         if( STATE.MENU == state ){
 
@@ -94,17 +93,56 @@ public class DisplayGame extends JPanel implements ActionListener {
         }
         else if( STATE.GAME == state ){
 
+            setBackground( Color.WHITE );
+
             mainPlayer.drawPlayer( g2 );
+            botPlayer.drawPlayer( g2 );
+            
+            /* For end-game message */
+            mainPlayerPosition = new Point( (int)( mainPlayer.getX() ), (int)( mainPlayer.getY() ) );
+            menu.setPoint( mainPlayerPosition );
+
             pellets.drawPellets( g2 );
 
             checkIfEaten();
-            
-            centreCamera = new Point( (int)( mainPlayer.getX() ), (int)( mainPlayer.getY() ) );
-            menu.setPoint( centreCamera );
             printInfo( g2 );
+
+            winOrLose();
 
             g2.draw( outerArea );
             g2.dispose(); // clean resources ?
+
+        }
+        else if( STATE.WIN == state ){
+            
+            menu.mainPlayerWin( g2 );
+
+        }
+        else if( STATE.LOSE == state ){
+
+            menu.mainPlayerWin( g2 );
+
+        }
+
+    }
+
+    private void winOrLose(){
+
+        double x1 = mainPlayer.getMidX();
+        double y1 = mainPlayer.getMidY();
+        double x2 = botPlayer.getMidX();
+        double y2 = botPlayer.getMidY();
+
+        double distance = Math.sqrt( ( x1 - x2 ) * ( x1 - x2 ) + ( y1 - y2 ) * ( y1 - y2 ) );
+
+        if( distance < mainPlayer.getRadius() && mainPlayer.getRadius() > botPlayer.getRadius() ){
+
+            state = STATE.WIN;
+
+        }
+        else if( distance < botPlayer.getRadius() && mainPlayer.getRadius() < botPlayer.getRadius() ){
+
+            state = STATE.LOSE;
 
         }
 
@@ -130,7 +168,7 @@ public class DisplayGame extends JPanel implements ActionListener {
 
         for( int i = 0; i < pellets.getPellets().length ; ++i ){
 
-            if( null != pellets.getPellets()[i] && mainPlayer.getPlayer().intersects( pellets.getPellets()[i].getBounds() ) ){
+            if( null != pellets.getPellets()[i] && mainPlayer.getPlayer().intersects( pellets.getPellets()[i].getBounds2D() ) ){
 
                 pellets.getPellets()[i] = null;
                 mainPlayer.increaseSize();
@@ -182,5 +220,7 @@ public class DisplayGame extends JPanel implements ActionListener {
     public Player getMainPlayer()               { return this.mainPlayer; }
 
     public void setMainPlayer( Player player )  { this.mainPlayer = player; }
+
+    public void setViewPort(JViewport vPort)    { this.vPort = vPort; }
 
 }
