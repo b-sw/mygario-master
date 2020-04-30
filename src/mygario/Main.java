@@ -23,7 +23,7 @@ public class Main {
             frame.setVisible( true );
             frame.add( pane );
             frame.setSize( DisplayGame.WIDTH, DisplayGame.HEIGHT );
-            
+            frame.setResizable( false );
 
             pane.setVerticalScrollBarPolicy( ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER );
             pane.setHorizontalScrollBarPolicy( ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );

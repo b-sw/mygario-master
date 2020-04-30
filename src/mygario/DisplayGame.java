@@ -42,7 +42,7 @@ public class DisplayGame extends JPanel implements ActionListener {
 
     private Point mainPlayerPosition;
     
-    private Pellet pellets;
+    private Pellets pellets;
 
     public static enum STATE{
         MENU,
@@ -63,10 +63,10 @@ public class DisplayGame extends JPanel implements ActionListener {
 
         time = System.nanoTime();
 
-        pellets = new Pellet( NUM_OF_PELLETS );
+        pellets = new Pellets( NUM_OF_PELLETS );
 
-        addMouseListener(menu);
-        setFocusable(true);
+        addMouseListener( menu );
+        setFocusable( true );
         requestFocusInWindow();
         
         Dimension newSize = new Dimension( OUTER_AREA_WIDTH, OUTER_AREA_HEIGHT );
