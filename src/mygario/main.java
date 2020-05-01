@@ -6,8 +6,6 @@ import javax.swing.ScrollPaneConstants;
 
 public class main {
 
-    public static boolean gamemode;
-
     public static void main( String[] args ){
 
             JFrame      frame   = new JFrame( "mygario" );
@@ -23,6 +21,8 @@ public class main {
             frame.setVisible( true );
             frame.add( pane );
             frame.setSize( DisplayGame.WIDTH, DisplayGame.HEIGHT );
+            
+            /* Only for Windows OS */
             frame.setResizable( false );
 
             pane.setVerticalScrollBarPolicy( ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER );
