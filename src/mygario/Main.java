@@ -4,7 +4,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-public class Main {
+public class main {
 
     public static boolean gamemode;
 
