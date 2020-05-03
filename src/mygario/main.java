@@ -23,7 +23,7 @@ public class main {
             frame.setSize( DisplayGame.WIDTH, DisplayGame.HEIGHT );
             
             /* Only for Windows OS */
-            //frame.setResizable( false );
+            frame.setResizable( false );
 
             pane.setVerticalScrollBarPolicy( ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER );
             pane.setHorizontalScrollBarPolicy( ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
