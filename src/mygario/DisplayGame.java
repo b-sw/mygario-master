@@ -29,6 +29,7 @@ public class DisplayGame extends JPanel implements ActionListener {
     private static final int INFO_POS_Y_OFFSET = 200;
     private static final int INFO_LINE_SPACE = 20;
     private static final int NUM_OF_PELLETS = 1000;
+    private static final int INITIAL_PELLET_DIST = 1000;
 
     private Rectangle outerArea;
     private JViewport vPort;
@@ -104,7 +105,8 @@ public class DisplayGame extends JPanel implements ActionListener {
 
             pellets.drawPellets( g2 );
 
-            checkIfEaten();
+            checkIfEaten( mainPlayer );
+            checkIfEaten( botPlayer );
             printInfo( g2 );
 
             winOrLose();
@@ -120,7 +122,7 @@ public class DisplayGame extends JPanel implements ActionListener {
         }
         else if( STATE.LOSE == state ){
 
-            menu.mainPlayerWin( g2 );
+            menu.botPlayerWin( g2 );
 
         }
 
@@ -164,14 +166,14 @@ public class DisplayGame extends JPanel implements ActionListener {
 
     }
 
-    public void checkIfEaten(){
+    public void checkIfEaten( Player player ){
 
         for( int i = 0; i < pellets.getPellets().length ; ++i ){
 
-            if( null != pellets.getPellets()[i] && mainPlayer.getPlayer().intersects( pellets.getPellets()[i].getBounds2D() ) ){
+            if( null != pellets.getPellets()[i] && player.getPlayer().intersects( pellets.getPellets()[i].getBounds2D() ) ){
 
                 pellets.getPellets()[i] = null;
-                mainPlayer.increaseSize();
+                player.increaseSize();
 
             }
 
@@ -190,12 +192,11 @@ public class DisplayGame extends JPanel implements ActionListener {
             double deltaX = mousePosition.x - mainPlayer.getPlayer().getCenterX();
             double deltaY = mousePosition.y - mainPlayer.getPlayer().getCenterY();
 
-            if( Player.PLAYER_DIAMETER / 2 < Math.sqrt( deltaX * deltaX ) + Math.sqrt( deltaY * deltaY ) ){
+            if( Player.PLAYER_DIAMETER / 2 < Math.sqrt( deltaX * deltaX  +  deltaY * deltaY ) ){
 
                     double angle = Math.atan2( deltaY, deltaX );
 
-                    mainPlayer.setX( mainPlayer.getX() + (int)( mainPlayer.getVelocity() * Math.cos( angle ) ) );
-                    mainPlayer.setY( mainPlayer.getY() + (int)( mainPlayer.getVelocity() * Math.sin( angle ) ) );
+                    mainPlayer.move( angle );
 
                     /*double move = Math.sqrt( deltaX* deltaX + deltaY * deltaY );
 
@@ -205,17 +206,64 @@ public class DisplayGame extends JPanel implements ActionListener {
                     mainPlayer.setX( mainPlayer.getX() + deltaXNormalized * mainPlayer.getVelocity() );
                     mainPlayer.setY( mainPlayer.getY() + deltaYNormalized * mainPlayer.getVelocity() );*/
 
-                    Point view = new Point((int) mainPlayer.getX() - WIDTH / 2, (int) mainPlayer.getY() - HEIGHT / 2);
-                    vPort.setViewPosition(view);
+                    Point view = new Point( (int) mainPlayer.getX() - WIDTH / 2, (int) mainPlayer.getY() - HEIGHT / 2 );
+                    vPort.setViewPosition( view );
 
             }
-            
+
+            moveBotPlayer( botPlayer );
             
             repaint();
 
         }
 
     } 
+
+    private void moveBotPlayer( Player bot ){
+
+        double angle = 0;
+
+        if( bot.getRadius() <= mainPlayer.getRadius() ){
+
+            angle = findPelletForBot( bot );
+
+        }
+        else if( bot.getRadius() > mainPlayer.getRadius() ){
+
+            angle = bot.getAngleToPlayer( mainPlayer );
+
+        }
+
+        bot.move( angle );
+
+    }
+
+    private double findPelletForBot( Player bot ){   /* returns angle */
+
+        double angle = 0;
+        double dist  = INITIAL_PELLET_DIST;
+
+        for (int i = 0; i < pellets.getPellets().length; ++i) {
+
+            if (null != pellets.getPellets()[i] ){
+
+                double deltaX = pellets.getPellets()[i].getCenterX() - bot.getMidX();
+                double deltaY = pellets.getPellets()[i].getCenterY() - bot.getMidY();
+
+                if( Math.sqrt( deltaX * deltaX  +  deltaY * deltaY ) < dist ){
+
+                    dist = Math.sqrt( deltaX * deltaX  +  deltaY * deltaY );
+                    angle = Math.atan2(deltaY, deltaX);
+
+                }
+
+            }
+
+        }
+
+        return angle;
+
+    }
 
     public Player getMainPlayer()               { return this.mainPlayer; }
 

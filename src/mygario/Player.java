@@ -52,8 +52,24 @@ public class Player {
 
     }
 
+    public void move( double angle ){
+
+        this.setX( this.getX() + (int) ( this.getVelocity() * Math.cos( angle ) ) );
+        this.setY( this.getY() + (int) ( this.getVelocity() * Math.sin( angle ) ) );
+
+    }
+
+    public double getAngleToPlayer( Player player ){
+
+        double deltaX = player.getMidX() - this.getMidX();
+        double deltaY = player.getMidY() - this.getMidY();
+
+        return Math.atan2(deltaY, deltaX);
+
+    }
+
     public double   getX()                          { return this.player.x; }
-    public void     setX( double x )                { this.player.x = x; };
+    public void     setX( double x )                { this.player.x = x; }
     public double   getY()                          { return this.player.y; }
     public void     setY( double y )                { this.player.y = y; }
     
@@ -65,7 +81,7 @@ public class Player {
 
     public double getRadius()                       { return this.player.width / 2; }
 
-    public double getMidX()                         { return this.player.x + this.player.width / 2; }
-    public double getMidY()                         { return this.player.y + this.player.height / 2 ; }
+    public double getMidX()                         { return this.player.getCenterX(); }
+    public double getMidY()                         { return this.player.getCenterY(); }
 
 }
