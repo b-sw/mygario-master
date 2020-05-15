@@ -1,4 +1,4 @@
-package mygario;
+package display;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -25,23 +25,23 @@ public class Menu implements MouseListener{
     private static final int STRING_OFFSET = 150;
     private static final int MESSAGE_STR_OFFSET = 100;
 
-    private static final int PLAY_X = DisplayGame.WIDTH / 2 - BUTTON_WIDTH / 2;
-    private static final int PLAY_Y = DisplayGame.HEIGHT / 2;
+    private static final int PLAY_X = Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2;
+    private static final int PLAY_Y = Display.WINDOW_HEIGHT / 2;
     private static final int QUIT_X = PLAY_X;
     private static final int QUIT_Y = PLAY_Y + BUTTON_HEIGHT * 2;
 
     private static final int FONT_SIZE = 50;
 
-    private Rectangle playButton = new Rectangle( DisplayGame.WIDTH / 2 - BUTTON_WIDTH / 2, DisplayGame.HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT );
-    private Rectangle quitButton = new Rectangle( DisplayGame.WIDTH / 2 - BUTTON_WIDTH / 2, DisplayGame.HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
+    private Rectangle playButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT );
+    private Rectangle quitButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
     
     private BufferedImage introLogo = null;
     private Point mainPlayerPosition;
 
-    //private DisplayGame displayGame;
+    //private Display display;
     public String[] args;
 
-    public Menu( DisplayGame displayGame )  { /*this.displayGame = displayGame;*/ }
+    public Menu( Display display )  { /*this.display = display;*/ }
     //public void setArgs( String[] a )    { this.args = a; }
 
     public void render( Graphics2D g ){
@@ -50,28 +50,28 @@ public class Menu implements MouseListener{
 
         try{
             
-            introLogo = ImageIO.read( new File( "E:\\Uczelnia\\Sem4\\[PROZ]\\mygario-master\\src\\img\\elka.jpg" ) );
-            //introLogo = ImageIO.read(new File("mygario-master\\img\\elka.jpg"));
-            g.drawImage(introLogo, DisplayGame.WIDTH / 2 - OVAL_W_OFFSET, DisplayGame.HEIGHT / 2 - OVAL_H_OFFSET, null);
+            //introLogo = ImageIO.read( new File( "E:\\Uczelnia\\Sem4\\[PROZ]\\mygario-master\\src\\img\\elka.jpg" ) );
+            introLogo = ImageIO.read(new File("../img/elka.jpg"));
+            g.drawImage(introLogo, Display.WINDOW_WIDTH / 2 - OVAL_W_OFFSET, Display.WINDOW_HEIGHT / 2 - OVAL_H_OFFSET, null);
 
         }
         catch( IOException exc ){
 
             g.setColor(Color.GREEN);
-            g.fillOval(DisplayGame.WIDTH / 2 - OVAL_W_OFFSET, DisplayGame.HEIGHT / 2 - OVAL_H_OFFSET, OVAL_DIAMETER, OVAL_DIAMETER);
+            g.fillOval(Display.WINDOW_WIDTH / 2 - OVAL_W_OFFSET, Display.WINDOW_HEIGHT / 2 - OVAL_H_OFFSET, OVAL_DIAMETER, OVAL_DIAMETER);
 
         }
         
         g.setColor( Color.BLUE );
-        g.drawString( "Test mygario", DisplayGame.WIDTH / 2 - STRING_OFFSET, DisplayGame.HEIGHT / 2 - STRING_OFFSET / 3 );
+        g.drawString( "Test mygario", Display.WINDOW_WIDTH / 2 - STRING_OFFSET, Display.WINDOW_HEIGHT / 2 - STRING_OFFSET / 3 );
         
         g.setColor( Color.BLACK );
         g.drawString( "Play", playButton.x, playButton.y + BUTTON_STR_OFFSET );
         g.setColor( Color.GRAY );
         g.drawString( "Quit", quitButton.x, quitButton.y + BUTTON_STR_OFFSET );
         
-        g.drawRect( DisplayGame.WIDTH / 2 - BUTTON_WIDTH / 2, DisplayGame.HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT ); 
-        g.drawRect( DisplayGame.WIDTH / 2 - BUTTON_WIDTH / 2, DisplayGame.HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
+        g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT ); 
+        g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
 
     }
 
@@ -101,7 +101,7 @@ public class Menu implements MouseListener{
 
             if( mouseY >= PLAY_Y && mouseY <= PLAY_Y + BUTTON_HEIGHT ){
 
-                DisplayGame.state = DisplayGame.STATE.GAME;
+                Display.state = Display.STATE.GAME;
 
             }
 

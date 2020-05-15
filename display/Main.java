@@ -1,17 +1,18 @@
-package mygario;
+package display;
+
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 
-public class main {
+public class Main {
 
     public static void main( String[] args ){
 
             JFrame      frame   = new JFrame( "mygario" );
             JScrollPane pane    = new JScrollPane();
             JViewport   vPort   = new JViewport();
-            DisplayGame display   = new DisplayGame();
+            Display display     = new Display();
 
             //display.menu.setArgs( args );
             vPort.add( display );
@@ -20,8 +21,7 @@ public class main {
             
             frame.setVisible( true );
             frame.add( pane );
-            frame.setSize( DisplayGame.WIDTH, DisplayGame.HEIGHT );
-            
+            frame.setSize( Display.WINDOW_WIDTH, Display.WINDOW_HEIGHT );
             /* Only for Windows OS */
             frame.setResizable( false );
 
