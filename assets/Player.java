@@ -147,7 +147,7 @@ public class Player {
 
             if (null != pellets.getPellets()[i] && this.getPlayer().intersects( pellets.getPellets()[i].getFood().getBounds2D() ) ) {
 
-                pellets.getPellets()[i] = null;
+                pellets.eatPellet( i );
                 this.increaseSize();
 
             }

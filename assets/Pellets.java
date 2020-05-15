@@ -33,6 +33,8 @@ public class Pellets {
 
     }
 
+    public void eatPellet( int which )                          { pellets[which] = null ; }
+
     public Food[] getPellets()                                  { return this.pellets; }
 
     public void setPellets( final Food[] pellets )              { this.pellets = pellets; }
