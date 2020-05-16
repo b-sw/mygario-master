@@ -38,15 +38,6 @@ public class Display extends JPanel implements ActionListener {
 
     private Point mainPlayerPosition;
 
-    public static enum STATE{
-        MENU,
-        GAME,
-        WIN,
-        LOSE
-    };
-    
-    public static STATE state = STATE.MENU;
-
     public Display() {
         
         Timer timer = new Timer( TIMER_SPEED_MS, this );
@@ -76,12 +67,12 @@ public class Display extends JPanel implements ActionListener {
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         setBackground( Color.LIGHT_GRAY );
         
-        if( STATE.MENU == state ){
+        if( Game.STATE.MENU == Game.getState() ){
 
-            menu.render( g2 );
+            menu.renderMenu( g2 );
 
         }
-        else if( STATE.GAME == state ){
+        else if( Game.STATE.GAME == Game.getState() ){
 
             setBackground( Color.WHITE );
 
@@ -104,12 +95,12 @@ public class Display extends JPanel implements ActionListener {
             g2.dispose(); // clean resources ?
 
         }
-        else if( STATE.WIN == state ){
+        else if( Game.STATE.WIN == Game.getState() ){
             
             menu.mainPlayerWin( g2 );
 
         }
-        else if( STATE.LOSE == state ){
+        else if( Game.STATE.LOSE == Game.getState() ){
 
             menu.botPlayerWin( g2 );
 
@@ -135,7 +126,7 @@ public class Display extends JPanel implements ActionListener {
 
     public void actionPerformed( ActionEvent e ){ 
 
-        if( STATE.GAME == state ){
+        if( Game.STATE.GAME == Game.getState() ){
 
             Point mousePosition = getMousePosition();
 
@@ -149,9 +140,10 @@ public class Display extends JPanel implements ActionListener {
 
     } 
 
-    public static STATE getState()                  { return state; }
-    public static void setState( STATE newState )   { state = newState; }
-
     public void setViewPort(JViewport vPort)        { this.vPort = vPort; }
+
+    public void setGame( Game game )                { this.game = game; }
+
+    public void resetTime( )                        { this.time = System.nanoTime(); }
 
 }

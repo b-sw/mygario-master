@@ -10,11 +10,22 @@ public class Game {
     private Player botPlayer;
     private Pellets pellets;
 
+    public static enum STATE{
+
+        MENU,
+        GAME,
+        WIN,
+        LOSE
+
+    };
+
+    public static STATE state = STATE.MENU;
+
     public Game() {
 
-        mainPlayer = new Player();
-        botPlayer = new Player();
-        pellets = new Pellets(NUM_OF_PELLETS);
+        mainPlayer  = new Player();
+        botPlayer   = new Player();
+        pellets     = new Pellets(NUM_OF_PELLETS);
 
     }
 
@@ -29,11 +40,11 @@ public class Game {
 
         if (distance < mainPlayer.getRadius() && mainPlayer.getRadius() > botPlayer.getRadius()) {
 
-            Display.setState( Display.STATE.WIN );
+            state = STATE.WIN;
 
         } else if (distance < botPlayer.getRadius() && mainPlayer.getRadius() < botPlayer.getRadius()) {
 
-            Display.setState( Display.STATE.LOSE );
+            state = STATE.LOSE;
 
         }
 
@@ -47,5 +58,8 @@ public class Game {
 
     public Pellets getPellets()                     { return this.pellets; }
     public void setPellets( Pellets pellets )       { this.pellets = pellets; }
+
+    public static STATE getState()                  { return state; }
+    public static void setState( STATE newState )   { state = newState; }
 
 }
