@@ -1,4 +1,4 @@
-package display;
+package game;
 
 import assets.*;
 
@@ -15,7 +15,8 @@ public class Game {
         MENU,
         GAME,
         WIN,
-        LOSE
+        LOSE,
+        TEST
 
     };
 

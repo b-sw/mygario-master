@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import game.*;
 
 public class Menu implements MouseListener{
 
@@ -28,7 +29,7 @@ public class Menu implements MouseListener{
     private static final int OVAL_W_OFFSET = 75;
     private static final int OVAL_H_OFFSET = 250;
     private static final int OVAL_DIAMETER = 150;
-    private static final int STRING_OFFSET = 150;
+    private static final int STRING_OFFSET = 100;
     private static final int MESSAGE_STR_OFFSET = 115;
     private static final int NEW_GAME_OFFSET = 50;
 
@@ -36,11 +37,18 @@ public class Menu implements MouseListener{
     private static final int PLAY_Y = Display.WINDOW_HEIGHT / 2;
     private static final int QUIT_X = PLAY_X;
     private static final int QUIT_Y = PLAY_Y + BUTTON_HEIGHT * 2;
+    private static final int TEST_X = PLAY_X;
+    private static final int TEST_Y = PLAY_Y + BUTTON_HEIGHT * 4;
 
     private static final int FONT_SIZE = 50;
 
     private Rectangle playButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT );
     private Rectangle quitButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
+    private Rectangle testButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 4, BUTTON_WIDTH, BUTTON_HEIGHT );
+
+    private Rectangle testFirst  = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 - BUTTON_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT );
+    //private Rectangle testSecond = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT );
+    //private Rectangle testThird  = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 3, BUTTON_WIDTH, BUTTON_HEIGHT );
     
     private BufferedImage introLogo = null;
     private Point mainPlayerPosition;
@@ -68,15 +76,18 @@ public class Menu implements MouseListener{
         }
         
         g.setColor( Color.BLUE );
-        g.drawString( "Test mygario", Display.WINDOW_WIDTH / 2 - STRING_OFFSET, Display.WINDOW_HEIGHT / 2 - STRING_OFFSET / 3 );
+        g.drawString( "mygario", Display.WINDOW_WIDTH / 2 - STRING_OFFSET, Display.WINDOW_HEIGHT / 2 - STRING_OFFSET / 3 );
         
         g.setColor( Color.BLACK );
         g.drawString( "Play", playButton.x, playButton.y + BUTTON_STR_OFFSET );
         g.setColor( Color.GRAY );
         g.drawString( "Quit", quitButton.x, quitButton.y + BUTTON_STR_OFFSET );
+        g.setColor( Color.GRAY );
+        g.drawString( "Test", testButton.x, testButton.y + BUTTON_STR_OFFSET );
         
-        g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT ); 
-        g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
+        //g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT ); 
+        //g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
+        //g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 4, BUTTON_WIDTH, BUTTON_HEIGHT );
 
     }
 
@@ -114,6 +125,15 @@ public class Menu implements MouseListener{
 
     }
 
+    public void printUnitTests( Graphics2D g ){
+
+        g.setFont( new Font( "cambria", Font.BOLD, FONT_SIZE / 2 ) );
+        g.setColor( Color.BLACK );
+        g.drawString( "Bot movement", testFirst.x, testFirst.y + BUTTON_STR_OFFSET );
+
+
+    }
+
     @Override
     public void mouseClicked( MouseEvent e ){ 
     
@@ -136,6 +156,16 @@ public class Menu implements MouseListener{
                 if( mouseY >= QUIT_Y && mouseY <= QUIT_Y + BUTTON_HEIGHT ){
 
                     System.exit( 1 );
+
+                }
+
+            }
+
+            if( mouseX >= TEST_X && mouseX <= TEST_X + BUTTON_WIDTH ){
+
+                if( mouseY >= TEST_Y && mouseY <= TEST_Y + BUTTON_HEIGHT ){
+
+                    Game.setState( Game.STATE.TEST );
 
                 }
 
@@ -170,6 +200,11 @@ public class Menu implements MouseListener{
             }
 
         }
+        /*else if( Game.STATE.TEST == Game.getState() ){
+
+
+
+        }*/
     
     }
 

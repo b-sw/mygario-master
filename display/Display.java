@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
+import game.*;
 
 public class Display extends JPanel implements ActionListener {
 
@@ -105,6 +106,11 @@ public class Display extends JPanel implements ActionListener {
             menu.botPlayerWin( g2 );
 
         }
+        else if( Game.STATE.TEST == Game.getState() ){
+
+            menu.printUnitTests( g2 );
+
+        }
 
     }
 
@@ -133,10 +139,10 @@ public class Display extends JPanel implements ActionListener {
             game.getMainPlayer().moveManually( vPort, mousePosition );
 
             game.getBotPlayer().moveAutomatically( game.getMainPlayer(), game.getPellets() );
-            
-            repaint();
 
         }
+
+        repaint();
 
     } 
 
