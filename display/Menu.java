@@ -11,34 +11,28 @@ import java.awt.event.MouseListener;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.*;
 import game.*;
 
 public class Menu implements MouseListener{
 
     /* CONSTANTS */
 
-    private static final int BUTTON_WIDTH = 100;
-    private static final int BUTTON_HEIGHT = 50;
+    private static final int BUTTON_WIDTH       = 100;
+    private static final int BUTTON_HEIGHT      = 50;
+    private static final int NEW_GAME_WIDTH     = 240;
+    private static final int QUIT_GAME_WIDTH    = 120;
 
-    private static final int NEW_GAME_WIDTH = 240;
-    private static final int NEW_GAME_HEIGHT = 60;
-    private static final int QUIT_GAME_WIDTH = 120;
-    private static final int QUIT_GAME_HEIGHT = 30;
-
-    private static final int BUTTON_STR_OFFSET = 40;
-    private static final int OVAL_W_OFFSET = 75;
-    private static final int OVAL_H_OFFSET = 250;
-    private static final int OVAL_DIAMETER = 150;
-    private static final int STRING_OFFSET = 100;
-    private static final int MESSAGE_STR_OFFSET = 115;
-    private static final int NEW_GAME_OFFSET = 50;
-
-    private static final int PLAY_X = Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2;
-    private static final int PLAY_Y = Display.WINDOW_HEIGHT / 2;
-    private static final int QUIT_X = PLAY_X;
-    private static final int QUIT_Y = PLAY_Y + BUTTON_HEIGHT * 2;
-    private static final int TEST_X = PLAY_X;
-    private static final int TEST_Y = PLAY_Y + BUTTON_HEIGHT * 4;
+    private static final int OVAL_W_OFFSET          = 75;
+    private static final int OVAL_H_OFFSET          = 250;
+    private static final int OVAL_DIAMETER          = 150;
+    private static final int STRING_OFFSET          = 100;
+    private static final int MESSAGE_STR_OFFSET     = 115;
+    private static final int NEW_GAME_OFFSET        = 50;
+    private static final int TEST_SUCCESS_OFFSET_X  = 200;
+    
+    public static final int BUTTON_STR_OFFSET       = 40;
+    public static final int GO_BACK_TEST_OFFSET_X   = 80;
 
     private static final int FONT_SIZE = 50;
 
@@ -46,12 +40,11 @@ public class Menu implements MouseListener{
     private Rectangle quitButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
     private Rectangle testButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 4, BUTTON_WIDTH, BUTTON_HEIGHT );
 
-    private Rectangle testFirst  = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 - BUTTON_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT );
-    //private Rectangle testSecond = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT , BUTTON_WIDTH, BUTTON_HEIGHT );
-    //private Rectangle testThird  = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 3, BUTTON_WIDTH, BUTTON_HEIGHT );
+    private Rectangle testFirst  = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH * 2, BUTTON_HEIGHT / 2 );
     
     private BufferedImage introLogo = null;
     private Point mainPlayerPosition;
+    private Point stringRefPoint;
 
     public String[] args;
     Display display;
@@ -84,10 +77,6 @@ public class Menu implements MouseListener{
         g.drawString( "Quit", quitButton.x, quitButton.y + BUTTON_STR_OFFSET );
         g.setColor( Color.GRAY );
         g.drawString( "Test", testButton.x, testButton.y + BUTTON_STR_OFFSET );
-        
-        //g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT ); 
-        //g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
-        //g.drawRect( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 4, BUTTON_WIDTH, BUTTON_HEIGHT );
 
     }
 
@@ -120,17 +109,32 @@ public class Menu implements MouseListener{
         g.setColor( Color.GRAY );
         g.drawString( "Quit game", mainPlayerPosition.x - QUIT_GAME_WIDTH / 2, mainPlayerPosition.y + 2 * NEW_GAME_OFFSET );        
 
-        g.drawRect( mainPlayerPosition.x - NEW_GAME_WIDTH / 2, mainPlayerPosition.y + NEW_GAME_OFFSET / 2 - BUTTON_STR_OFFSET / 2 , NEW_GAME_WIDTH, NEW_GAME_HEIGHT ); 
-        g.drawRect( mainPlayerPosition.x - QUIT_GAME_WIDTH / 2, mainPlayerPosition.y + 2 * NEW_GAME_OFFSET - BUTTON_STR_OFFSET / 2, QUIT_GAME_WIDTH, QUIT_GAME_HEIGHT );
-
     }
 
-    public void printUnitTests( Graphics2D g ){
+    public void printUnitTests( Graphics2D g, JViewport vPort ){
+
+        Point p = new Point( testFirst.x - Display.WINDOW_WIDTH / 2 + BUTTON_WIDTH, testFirst.y - Display.WINDOW_HEIGHT / 2 );
+        vPort.setViewPosition( p );
 
         g.setFont( new Font( "cambria", Font.BOLD, FONT_SIZE / 2 ) );
         g.setColor( Color.BLACK );
-        g.drawString( "Bot movement", testFirst.x, testFirst.y + BUTTON_STR_OFFSET );
+        g.drawString( "bot movement", testFirst.x, testFirst.y );
 
+
+        g.drawString( "go back", testFirst.x, testFirst.y + BUTTON_HEIGHT * 3 );
+
+    }
+
+    public void printTestSuccessful( Graphics2D g ){
+
+        g.setColor( Color.GREEN );
+        g.setFont( new Font( "cambria", Font.BOLD, FONT_SIZE ) );
+        g.drawString( "TEST SUCCESSFUL", (int)UnitTests.getPlayerB().getX() - TEST_SUCCESS_OFFSET_X, (int)UnitTests.getPlayerB().getY() );
+
+        g.setColor( Color.GRAY );
+        g.drawString( "go back", (int)UnitTests.getPlayerB().getX() - GO_BACK_TEST_OFFSET_X, (int)UnitTests.getPlayerB().getY() + BUTTON_STR_OFFSET );
+
+        stringRefPoint = new Point( (int)( UnitTests.getPlayerB().getX() ), (int)( UnitTests.getPlayerB().getY() ) );
 
     }
 
@@ -140,71 +144,56 @@ public class Menu implements MouseListener{
         int mouseX = e.getX();
         int mouseY = e.getY();
 
-        if( Game.STATE.MENU == Game.getState() ){
-
-            if( mouseX >= PLAY_X && mouseX <= PLAY_X + BUTTON_WIDTH ){
-
-                if( mouseY >= PLAY_Y && mouseY <= PLAY_Y + BUTTON_HEIGHT ){
-
-                    Game.setState( Game.STATE.GAME );
-                }
-
-            }
-        
-            if( mouseX >= QUIT_X && mouseX <= QUIT_X + BUTTON_WIDTH ){
-
-                if( mouseY >= QUIT_Y && mouseY <= QUIT_Y + BUTTON_HEIGHT ){
-
-                    System.exit( 1 );
-
-                }
-
-            }
-
-            if( mouseX >= TEST_X && mouseX <= TEST_X + BUTTON_WIDTH ){
-
-                if( mouseY >= TEST_Y && mouseY <= TEST_Y + BUTTON_HEIGHT ){
-
-                    Game.setState( Game.STATE.TEST );
-
-                }
-
-            }
+        if( Buttons.clickedPlay( mouseX, mouseY ) ){
+            
+            Game.setState( Game.STATE.GAME );
 
         }
-        else if( Game.STATE.WIN == Game.getState() || Game.STATE.LOSE == Game.getState() ){
 
-            int playNewOffsetY = ( NEW_GAME_OFFSET - BUTTON_STR_OFFSET ) / 2;
-            int quitNewOffsetY = 2 * NEW_GAME_OFFSET - BUTTON_STR_OFFSET / 2;
+        if( Buttons.clickedQuit( mouseX, mouseY ) ){
 
-            if( mouseX >= mainPlayerPosition.x - NEW_GAME_WIDTH / 2 && mouseX <= mainPlayerPosition.x + NEW_GAME_WIDTH / 2 ){
-
-                if( mouseY >= mainPlayerPosition.y + playNewOffsetY && mouseY <= mainPlayerPosition.y + playNewOffsetY + NEW_GAME_HEIGHT ){
-
-                    Game.setState( Game.STATE.GAME );
-                    display.setGame( new Game() );
-                    display.resetTime();
-
-                }
-
-            }
-        
-            if( mouseX >= mainPlayerPosition.x - QUIT_GAME_WIDTH / 2 && mouseX <= mainPlayerPosition.x + QUIT_GAME_WIDTH / 2 ){
-
-                if( mouseY >= mainPlayerPosition.y + quitNewOffsetY && mouseY <= mainPlayerPosition.y + quitNewOffsetY + QUIT_GAME_HEIGHT ){
-
-                    System.exit( 1 );
-
-                }
-
-            }
+            System.exit( 1 );
 
         }
-        /*else if( Game.STATE.TEST == Game.getState() ){
 
+        if( Buttons.clickedTestMenu( mouseX, mouseY ) ){
 
+            Game.setState( Game.STATE.TEST_MENU );
 
-        }*/
+        }
+
+        if( Buttons.clickedNewGame( mouseX, mouseY, mainPlayerPosition ) ){
+
+            Game.setState( Game.STATE.GAME );
+            display.setGame( new Game() );
+            display.resetTime();
+
+        }
+        
+        if( Buttons.clickedQuitGame( mouseX, mouseY, mainPlayerPosition ) ){
+
+            System.exit( 1 );
+
+        }
+        
+        if( Buttons.clickedTestBMov( mouseX, mouseY ) ){
+
+            UnitTests.setBotMovement();
+            Game.setState( Game.STATE.TEST );
+
+        }
+
+        if( Buttons.clickedGoBackMenu( mouseX, mouseY ) ){
+
+            Game.setState( Game.STATE.MENU );
+
+        }
+
+        if( Buttons.clickedGoBackTestMenu( mouseX, mouseY, stringRefPoint ) ){
+
+            Game.setState( Game.STATE.TEST_MENU );
+
+        }
     
     }
 

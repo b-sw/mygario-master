@@ -16,11 +16,13 @@ public class Game {
         GAME,
         WIN,
         LOSE,
-        TEST
+        TEST_MENU,
+        TEST,
+        TEST_SUCCESS
 
     };
 
-    public static STATE state = STATE.MENU;
+    private static STATE state = STATE.MENU;
 
     public Game() {
 
@@ -32,22 +34,16 @@ public class Game {
 
     public void handleWinLose() {
 
-        double x1 = mainPlayer.getMidX();
-        double y1 = mainPlayer.getMidY();
-        double x2 = botPlayer.getMidX();
-        double y2 = botPlayer.getMidY();
-
-        double distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-
-        if (distance < mainPlayer.getRadius() && mainPlayer.getRadius() > botPlayer.getRadius()) {
+        if( mainPlayer.overlays( botPlayer ) ){
 
             state = STATE.WIN;
 
-        } else if (distance < botPlayer.getRadius() && mainPlayer.getRadius() < botPlayer.getRadius()) {
+        } 
+        else if( botPlayer.overlays( mainPlayer) ){
 
             state = STATE.LOSE;
 
-        }
+        } 
 
     }
 

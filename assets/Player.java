@@ -37,6 +37,15 @@ public class Player {
 
     }
 
+    public Player( double x, double y ){
+
+        random = new Random();
+        
+        player = new Ellipse2D.Double( x , y, PLAYER_DIAMETER, PLAYER_DIAMETER );
+        playerColor = new Color( random.nextInt( RGB_RANGE ), random.nextInt( RGB_RANGE ), random.nextInt( RGB_RANGE ) );
+
+    }
+
     public void drawPlayer( Graphics2D g ){
 
         g.setColor( playerColor );
@@ -64,6 +73,24 @@ public class Player {
 
         this.setX( this.getX() + (int) ( this.getVelocity() * Math.cos( angle ) ) );
         this.setY( this.getY() + (int) ( this.getVelocity() * Math.sin( angle ) ) );
+
+    }
+
+    public boolean overlays( Player player ){
+
+        double x1 = this.getMidX();
+        double y1 = this.getMidY();
+        double x2 = player.getMidX();
+        double y2 = player.getMidY();
+
+        double distance = Math.sqrt( (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) );
+
+        if( distance < this.getRadius() && this.getRadius() > player.getRadius() ){
+
+            return true;
+
+        }
+        else return false;
 
     }
 

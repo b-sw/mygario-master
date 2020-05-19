@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
+import java.awt.geom.Ellipse2D;
 import javax.swing.*;
 import game.*;
 
@@ -59,6 +60,9 @@ public class Display extends JPanel implements ActionListener {
         
         timer.start();
 
+        // UNIT TESTS
+        UnitTests.setDisplay( this );
+
     }
 
     public void paintComponent( Graphics g ){
@@ -67,6 +71,9 @@ public class Display extends JPanel implements ActionListener {
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         setBackground( Color.LIGHT_GRAY );
+
+        UnitTests.setViewport( vPort );
+        UnitTests.setGraphics( g2 );
         
         if( Game.STATE.MENU == Game.getState() ){
 
@@ -106,9 +113,19 @@ public class Display extends JPanel implements ActionListener {
             menu.botPlayerWin( g2 );
 
         }
+        else if( Game.STATE.TEST_MENU == Game.getState() ){
+
+            menu.printUnitTests( g2, vPort );
+
+        }
         else if( Game.STATE.TEST == Game.getState() ){
 
-            menu.printUnitTests( g2 );
+            UnitTests.runBotMovement();
+
+        }
+        else if( Game.STATE.TEST_SUCCESS == Game.getState() ){
+
+            menu.printTestSuccessful( g2 );
 
         }
 
@@ -139,6 +156,12 @@ public class Display extends JPanel implements ActionListener {
             game.getMainPlayer().moveManually( vPort, mousePosition );
 
             game.getBotPlayer().moveAutomatically( game.getMainPlayer(), game.getPellets() );
+
+        }
+        else if( Game.STATE.TEST == Game.getState() ){
+
+            UnitTests.setViewPlayer();
+            UnitTests.getPlayerB().moveAutomatically( UnitTests.getPlayerA(), UnitTests.getPellets() );
 
         }
 
