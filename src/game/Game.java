@@ -1,6 +1,7 @@
 package game;
 
-import assets.*;
+import java.awt.Point;
+import model.*;
 
 public class Game {
     
@@ -16,9 +17,9 @@ public class Game {
         GAME,
         WIN,
         LOSE,
-        TEST_MENU,
         TEST,
-        TEST_SUCCESS
+        TEST_SUCCESS,
+        TEST_FAIL
 
     };
 
@@ -58,5 +59,7 @@ public class Game {
 
     public static STATE getState()                  { return state; }
     public static void setState( STATE newState )   { state = newState; }
+
+    public Point getMPPosition()                    { return new Point( (int)( mainPlayer.getX() ), (int)(mainPlayer.getY() ) ); }
 
 }

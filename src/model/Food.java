@@ -1,4 +1,4 @@
-package assets;
+package model;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;

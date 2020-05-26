@@ -1,6 +1,4 @@
-package assets;
-
-import java.awt.Graphics2D;
+package model;
 
 public class Pellets {
 
@@ -13,21 +11,6 @@ public class Pellets {
         for( int i = 0; i < pellets.length; ++i ){
 
             pellets[i] = new Food();
-
-        }
-
-    }
-
-    public void drawPellets( final Graphics2D g ){
-
-        for( int i = 0; i < pellets.length; ++i ){
-
-            if( null != pellets[i] ){
-
-                g.setColor( pellets[i].getFoodColor() );
-                g.fill( pellets[i].getFood() );
-
-            }
 
         }
 

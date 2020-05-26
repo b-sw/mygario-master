@@ -1,11 +1,9 @@
-package assets;
+package model;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
-import java.awt.Graphics2D;
 import java.util.Random;
 import java.awt.Point;
-import javax.swing.*;
 
 public class Player {
 
@@ -43,13 +41,6 @@ public class Player {
         
         player = new Ellipse2D.Double( x , y, PLAYER_DIAMETER, PLAYER_DIAMETER );
         playerColor = new Color( random.nextInt( RGB_RANGE ), random.nextInt( RGB_RANGE ), random.nextInt( RGB_RANGE ) );
-
-    }
-
-    public void drawPlayer( Graphics2D g ){
-
-        g.setColor( playerColor );
-        g.fill( player );
 
     }
 
@@ -94,7 +85,7 @@ public class Player {
 
     }
 
-    public void moveManually( JViewport vPort, Point mousePosition ){
+    public void moveManually( Point mousePosition ){
 
         if( null == mousePosition ) return;
 
@@ -106,9 +97,6 @@ public class Player {
             double angle = Math.atan2( deltaY, deltaX );
 
             this.move( angle );
-
-            Point view = new Point( (int) this.getX() - WINDOW_WIDTH / 2, (int) this.getY() - WINDOW_HEIGHT / 2 );
-            vPort.setViewPosition( view );
             
         }
 
@@ -198,5 +186,7 @@ public class Player {
 
     public double getMidX()                         { return this.player.getCenterX(); }
     public double getMidY()                         { return this.player.getCenterY(); }
+
+    public Color getColor()                         { return this.playerColor; }
 
 }
