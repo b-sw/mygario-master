@@ -1,3 +1,5 @@
+package model;
+
 import main.model.Food;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;

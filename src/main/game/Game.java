@@ -31,6 +31,8 @@ public class Game {
         botPlayer   = new Player();
         pellets     = new Pellets(NUM_OF_PELLETS);
 
+        state       = STATE.MENU;
+
     }
 
     public void handleWinLose() {

@@ -1,3 +1,5 @@
+package model;
+
 import main.model.Food;
 import main.model.Pellets;
 import org.junit.jupiter.api.AfterAll;

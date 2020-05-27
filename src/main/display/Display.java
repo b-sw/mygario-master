@@ -114,6 +114,6 @@ public class Display extends JPanel implements ActionListener {
     public void setGame( Game game )                { this.game = game; }
     public Game getGame()                           { return this.game; }
 
-    public void resetTime()                        { this.time = System.nanoTime(); }
+    public void resetTime()                         { this.time = System.nanoTime(); }
 
 }
