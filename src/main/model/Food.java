@@ -1,10 +1,10 @@
-package model;
+package main.model;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.util.Random;
 
-import display.Display;
+import main.display.Display;
 
 public class Food {
     

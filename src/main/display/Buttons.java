@@ -1,7 +1,7 @@
-package display;
+package main.display;
 
 import java.awt.Point;
-import game.*;
+import main.game.*;
 
 public class Buttons {
 

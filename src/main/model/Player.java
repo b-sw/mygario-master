@@ -1,4 +1,4 @@
-package model;
+package main.model;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
@@ -10,13 +10,13 @@ public class Player {
     public static final int     PLAYER_DIAMETER     = 25;
     public static final int     WINDOW_WIDTH        = 800;
     public static final int     WINDOW_HEIGHT       = 600;
-    
-    private static final int    INIT_VELOCITY       = 5;
+    public static final double  DELTA_SIZE          = 0.9;
+    public static final double  DELTA_VELOCITY      = 0.03;
+    public static final int     INIT_VELOCITY       = 5;
+
     private static final int    POSITION_RANGE      = 500;
     private static final int    RGB_RANGE           = 255;
     private static final int    POSITION_OFFSET     = 1500;
-    private static final double DELTA_SIZE          = 0.9;
-    private static final double DELTA_VELOCITY      = 0.03;
     private static final int    INITIAL_PELLET_DIST = 1000;
 
     private Ellipse2D.Double player;
@@ -132,9 +132,9 @@ public class Player {
                 double deltaX = pellets.getPellets()[i].getFood().getCenterX() - this.getMidX();
                 double deltaY = pellets.getPellets()[i].getFood().getCenterY() - this.getMidY();
 
-                if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) < dist) {
+                if ( Math.sqrt(deltaX * deltaX + deltaY * deltaY) < dist ) {
 
-                    dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                    dist = Math.sqrt( deltaX * deltaX + deltaY * deltaY) ;
                     angle = Math.atan2(deltaY, deltaX);
 
                 }
@@ -180,7 +180,6 @@ public class Player {
     public void setPlayer( Ellipse2D.Double player ){ this.player = player; }
 
     public double getVelocity()                     { return this.velocity; }
-    public void setVelocity( double velocity )      { this.velocity = velocity; }
 
     public double getRadius()                       { return this.player.width / 2; }
 

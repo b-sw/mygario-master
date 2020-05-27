@@ -1,4 +1,4 @@
-package display;
+package main.display;
 
 import java.awt.Graphics2D;
 import java.util.concurrent.TimeUnit;
@@ -11,8 +11,8 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import game.*;
-import model.*;
+import main.game.*;
+import main.model.*;
 
 public class Draw {
   
@@ -173,7 +173,7 @@ public class Draw {
 
         g.setFont( new Font( "cambria", Font.BOLD, FONT_SIZE / 2 ) );
         g.setColor( Color.GRAY );
-        g.drawString( "Quit game", mainPlayerPosition.x - QUIT_GAME_WIDTH / 2, mainPlayerPosition.y + 2 * NEW_GAME_OFFSET );        
+        g.drawString( "Quit main.game", mainPlayerPosition.x - QUIT_GAME_WIDTH / 2, mainPlayerPosition.y + 2 * NEW_GAME_OFFSET );
 
     }
 

@@ -1,9 +1,9 @@
-package display;
+package main.display;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import game.*;
+import main.game.*;
 
 public class Menu implements MouseListener{
 

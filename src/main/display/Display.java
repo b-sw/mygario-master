@@ -1,4 +1,4 @@
-package display;
+package main.display;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,7 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import game.*;
+import main.game.*;
 
 public class Display extends JPanel implements ActionListener {
 

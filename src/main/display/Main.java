@@ -1,4 +1,4 @@
-package display;
+package main.display;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -14,7 +14,7 @@ public class Main {
             JViewport   vPort   = new JViewport();
             Display display     = new Display();
 
-            //display.menu.setArgs( args );
+            //main.display.menu.setArgs( args );
             vPort.add( display );
             pane.setViewport( vPort );
             display.setViewPort( vPort );

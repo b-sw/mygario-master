@@ -1,7 +1,7 @@
-package game;
+package main.game;
 
 import java.awt.Point;
-import model.*;
+import main.model.*;
 
 public class Game {
     
