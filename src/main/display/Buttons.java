@@ -48,18 +48,6 @@ public class Buttons {
 
     }
 
-    public static boolean clickedTest( int mouseX, int mouseY ){
-
-        if( Game.STATE.MENU == Game.getState() &&
-            mouseX >= TEST_X && mouseX <= TEST_X + BUTTON_WIDTH &&
-            mouseY >= TEST_Y && mouseY <= TEST_Y + BUTTON_HEIGHT )
-
-            return true;
-
-        else return false;
-
-    }
-
     public static boolean clickedNewGame( int mouseX, int mouseY, Game game ){
 
         Point mainPlayer = game.getMPPosition();

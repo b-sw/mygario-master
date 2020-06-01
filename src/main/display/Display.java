@@ -76,11 +76,6 @@ public class Display extends JPanel implements ActionListener {
             Draw.botPlayerWin( g2, game );
 
         }
-        else if( Game.STATE.TEST == Game.getState() ){
-
-            //menu.printUnitTests( g2, vPort );
-
-        }
 
     }
 

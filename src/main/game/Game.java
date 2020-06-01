@@ -18,8 +18,6 @@ public class Game {
         WIN,
         LOSE,
         TEST,
-        TEST_SUCCESS,
-        TEST_FAIL
 
     };
 

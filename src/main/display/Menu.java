@@ -35,16 +35,10 @@ public class Menu implements MouseListener{
 
         }
 
-        if( Buttons.clickedTest( mouseX, mouseY ) ){
-
-            Game.setState( Game.STATE.TEST );
-
-        }
-
         if( Buttons.clickedNewGame( mouseX, mouseY, display.getGame() ) ){
 
-            Game.setState( Game.STATE.GAME );
             display.setGame( new Game() );
+            Game.setState( Game.STATE.GAME );
             display.resetTime();
 
         }

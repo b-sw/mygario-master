@@ -39,7 +39,6 @@ public class Draw {
     private static final int NEW_GAME_OFFSET        = 50;
     
     public static final int BUTTON_STR_OFFSET       = 40;
-    public static final int GO_BACK_TEST_OFFSET_X   = 80;
 
     private static final int INFO_FONT_SIZE = 15;
     // ########################
@@ -129,14 +128,11 @@ public class Draw {
         
         Rectangle playButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2, BUTTON_WIDTH, BUTTON_HEIGHT );
         Rectangle quitButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 2, BUTTON_WIDTH, BUTTON_HEIGHT );
-        Rectangle testButton = new Rectangle( Display.WINDOW_WIDTH / 2 - BUTTON_WIDTH / 2, Display.WINDOW_HEIGHT / 2 + BUTTON_HEIGHT * 4, BUTTON_WIDTH, BUTTON_HEIGHT );
 
         g.setColor( Color.BLACK );
         g.drawString( "Play", playButton.x, playButton.y + BUTTON_STR_OFFSET );
         g.setColor( Color.GRAY );
         g.drawString( "Quit", quitButton.x, quitButton.y + BUTTON_STR_OFFSET );
-        g.setColor( Color.GRAY );
-        g.drawString( "Test", testButton.x, testButton.y + BUTTON_STR_OFFSET );
 
     }
 
@@ -173,7 +169,7 @@ public class Draw {
 
         g.setFont( new Font( "cambria", Font.BOLD, FONT_SIZE / 2 ) );
         g.setColor( Color.GRAY );
-        g.drawString( "Quit main.game", mainPlayerPosition.x - QUIT_GAME_WIDTH / 2, mainPlayerPosition.y + 2 * NEW_GAME_OFFSET );
+        g.drawString( "Quit game", mainPlayerPosition.x - QUIT_GAME_WIDTH / 2, mainPlayerPosition.y + 2 * NEW_GAME_OFFSET );
 
     }
 
